@@ -3,6 +3,7 @@ package com.pulsefin.core.data.local
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.pulsefin.core.common.dispatchers.AppDispatchers
 import kotlinx.coroutines.CoroutineScope
@@ -20,6 +21,8 @@ data class Settings(
     val darkTheme: Boolean = true,
     val dynamicColor: Boolean = true,
     val hapticsEnabled: Boolean = true,
+    /** Album-art corner rounding as a percent (0 = square, 28 = previous bubbly default). */
+    val artworkCornerPercent: Int = 12,
 )
 
 /** Persists user-facing app settings in a plain (non-encrypted) DataStore — nothing here is sensitive. */
@@ -29,6 +32,7 @@ class SettingsStore(context: Context, private val dispatchers: AppDispatchers) {
         val DARK_THEME = booleanPreferencesKey("dark_theme")
         val DYNAMIC_COLOR = booleanPreferencesKey("dynamic_color")
         val HAPTICS_ENABLED = booleanPreferencesKey("haptics_enabled")
+        val ARTWORK_CORNER_PERCENT = intPreferencesKey("artwork_corner_percent")
     }
 
     private val dataStore = context.dataStore
@@ -39,6 +43,8 @@ class SettingsStore(context: Context, private val dispatchers: AppDispatchers) {
             darkTheme = prefs[Keys.DARK_THEME] ?: defaults.darkTheme,
             dynamicColor = prefs[Keys.DYNAMIC_COLOR] ?: defaults.dynamicColor,
             hapticsEnabled = prefs[Keys.HAPTICS_ENABLED] ?: defaults.hapticsEnabled,
+            artworkCornerPercent = (prefs[Keys.ARTWORK_CORNER_PERCENT] ?: defaults.artworkCornerPercent)
+                .coerceIn(0, 28),
         )
     }
 
@@ -65,5 +71,9 @@ class SettingsStore(context: Context, private val dispatchers: AppDispatchers) {
 
     suspend fun setHapticsEnabled(enabled: Boolean): Unit = withContext(dispatchers.io) {
         dataStore.edit { it[Keys.HAPTICS_ENABLED] = enabled }
+    }
+
+    suspend fun setArtworkCornerPercent(percent: Int): Unit = withContext(dispatchers.io) {
+        dataStore.edit { it[Keys.ARTWORK_CORNER_PERCENT] = percent.coerceIn(0, 28) }
     }
 }

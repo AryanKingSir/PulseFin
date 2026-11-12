@@ -46,11 +46,11 @@ import com.pulsefin.app.ui.components.MediaRow
 import com.pulsefin.app.ui.components.RefreshBox
 import com.pulsefin.app.ui.components.bouncyClickable
 import com.pulsefin.app.ui.components.pressScale
+import com.pulsefin.app.ui.components.rememberArtworkThumbnailShape
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.remember
 import com.pulsefin.core.common.result.PulseResult
 import com.pulsefin.core.common.util.sizedArtUrl
-import com.pulsefin.core.designsystem.theme.SquircleShape
 import com.pulsefin.core.designsystem.theme.blobShapes
 import com.pulsefin.core.domain.model.Album
 import com.pulsefin.core.domain.model.Song
@@ -313,6 +313,7 @@ private fun SectionHeader(text: String) {
 
 @Composable
 private fun RecentAlbumCard(album: Album, onClick: () -> Unit) {
+    val artworkShape = rememberArtworkThumbnailShape()
     Column(
         modifier = Modifier
             .width(150.dp)
@@ -325,7 +326,7 @@ private fun RecentAlbumCard(album: Album, onClick: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f)
-                .clip(SquircleShape),
+                .clip(artworkShape),
         )
         Text(
             text = album.name,

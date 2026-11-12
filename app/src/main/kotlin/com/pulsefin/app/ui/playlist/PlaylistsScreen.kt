@@ -50,9 +50,9 @@ import com.pulsefin.app.R
 import com.pulsefin.app.ui.components.RefreshBox
 import com.pulsefin.app.ui.components.bouncyClickable
 import com.pulsefin.app.ui.components.pressScale
+import com.pulsefin.app.ui.components.rememberArtworkThumbnailShape
 import com.pulsefin.core.common.result.PulseResult
 import com.pulsefin.core.common.util.sizedArtUrl
-import com.pulsefin.core.designsystem.theme.SquircleShape
 import com.pulsefin.core.domain.model.DownloadState
 import com.pulsefin.core.domain.model.Playlist
 import com.pulsefin.core.domain.repository.DownloadRepository
@@ -202,9 +202,10 @@ fun PlaylistsScreen(
 
 @Composable
 private fun DownloadsCard(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    val artworkShape = rememberArtworkThumbnailShape()
     Column(modifier = modifier.bouncyClickable(pressedScale = 0.95f, onClick = onClick)) {
         Surface(
-            modifier = Modifier.fillMaxWidth().aspectRatio(1f).clip(SquircleShape),
+            modifier = Modifier.fillMaxWidth().aspectRatio(1f).clip(artworkShape),
             color = MaterialTheme.colorScheme.primaryContainer,
         ) {
             Box(contentAlignment = Alignment.Center) {
@@ -258,7 +259,7 @@ private fun PlaylistCard(playlist: Playlist, onClick: () -> Unit, modifier: Modi
  */
 @Composable
 private fun PlaylistArt(playlist: Playlist) {
-    val tileModifier = Modifier.fillMaxWidth().aspectRatio(1f).clip(SquircleShape)
+    val tileModifier = Modifier.fillMaxWidth().aspectRatio(1f).clip(rememberArtworkThumbnailShape())
     val art = playlist.memberArtworkUrls
     when {
         playlist.songCount <= 0 -> PlaylistArtPlaceholder(tileModifier)

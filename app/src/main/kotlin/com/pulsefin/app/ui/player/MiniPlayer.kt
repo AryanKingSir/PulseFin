@@ -35,7 +35,7 @@ import com.pulsefin.app.R
 import com.pulsefin.app.ui.components.AnimatedPlayPauseIcon
 import com.pulsefin.app.ui.components.bouncyClickable
 import com.pulsefin.app.ui.components.pressScale
-import com.pulsefin.core.designsystem.theme.SquircleShape
+import com.pulsefin.app.ui.components.rememberArtworkThumbnailShape
 import com.pulsefin.core.playback.controller.PlaybackController
 import com.pulsefin.core.playback.controller.PlaybackState
 
@@ -50,6 +50,7 @@ fun MiniPlayer(
 ) {
     if (!state.hasItem) return
 
+    val artworkShape = rememberArtworkThumbnailShape()
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -74,7 +75,7 @@ fun MiniPlayer(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(52.dp)
-                        .clip(SquircleShape),
+                        .clip(artworkShape),
                 )
                 // Crossfade + drift the labels on track change; capture the strings in the target
                 // so the outgoing content keeps showing the previous track while it animates away.

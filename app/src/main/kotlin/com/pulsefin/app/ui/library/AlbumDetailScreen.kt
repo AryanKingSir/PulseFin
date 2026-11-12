@@ -57,10 +57,10 @@ import com.pulsefin.app.R
 import com.pulsefin.app.ui.components.DownloadStateIndicator
 import com.pulsefin.app.ui.components.bouncyClickable
 import com.pulsefin.app.ui.components.pressScale
+import com.pulsefin.app.ui.components.rememberArtworkThumbnailShape
 import com.pulsefin.app.ui.components.sharedArtwork
 import com.pulsefin.app.ui.theme.ArtworkTheme
 import com.pulsefin.core.common.util.sizedArtUrl
-import com.pulsefin.core.designsystem.theme.SquircleShape
 import com.pulsefin.core.common.result.PulseResult
 import com.pulsefin.core.domain.model.DownloadState
 import com.pulsefin.core.domain.model.Song
@@ -235,6 +235,7 @@ private fun AlbumHeader(
     allDownloaded: Boolean,
     onDownloadAllOrRemoveAll: () -> Unit,
 ) {
+    val artworkShape = rememberArtworkThumbnailShape()
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -253,7 +254,7 @@ private fun AlbumHeader(
             modifier = Modifier
                 .sharedArtwork("album-art-$albumId")
                 .size(220.dp)
-                .clip(SquircleShape),
+                .clip(artworkShape),
         )
         Spacer(Modifier.size(16.dp))
         Text(albumName, style = MaterialTheme.typography.headlineSmall, maxLines = 2, overflow = TextOverflow.Ellipsis)

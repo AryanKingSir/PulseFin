@@ -20,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -46,6 +47,7 @@ import com.pulsefin.app.R
 import com.pulsefin.app.ui.components.bouncyClickable
 import com.pulsefin.app.ui.components.pressScale
 import org.koin.androidx.compose.koinViewModel
+import kotlin.math.roundToInt
 
 private const val PULSEFIN_WEBSITE_URL = "https://funnykid7.github.io/PulseFin/"
 
@@ -105,6 +107,31 @@ fun SettingsScreen(
                         checked = settings.hapticsEnabled,
                         onCheckedChange = viewModel::setHapticsEnabled,
                     )
+                }
+                item {
+                    Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                text = stringResource(R.string.settings_artwork_corners),
+                                style = MaterialTheme.typography.bodyLarge,
+                            )
+                            Text(
+                                text = "${settings.artworkCornerPercent}%",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        Slider(
+                            value = settings.artworkCornerPercent.toFloat(),
+                            onValueChange = { viewModel.setArtworkCornerPercent(it.roundToInt()) },
+                            valueRange = 0f..28f,
+                            steps = 27,
+                        )
+                    }
                 }
 
                 item { SectionHeader(stringResource(R.string.section_downloads)) }
