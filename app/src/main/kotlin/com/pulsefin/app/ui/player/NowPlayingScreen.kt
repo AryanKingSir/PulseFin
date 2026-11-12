@@ -86,8 +86,8 @@ import com.pulsefin.app.ui.components.bouncyClickable
 import com.pulsefin.app.ui.components.performHaptic
 import com.pulsefin.app.ui.components.pressScale
 import com.pulsefin.app.ui.components.rememberArtworkHeroShape
-import com.pulsefin.app.ui.components.rememberArtworkThumbnailShape
 import com.pulsefin.app.ui.theme.ArtworkTheme
+import com.pulsefin.core.designsystem.theme.SquircleShape
 import com.pulsefin.core.designsystem.theme.cookieShape
 import com.pulsefin.core.domain.model.DownloadState
 import com.pulsefin.core.domain.repository.DownloadRepository
@@ -182,7 +182,6 @@ private fun NowPlayingContent(
     val view = LocalView.current
     val hapticsEnabled = LocalHapticsEnabled.current
     val artworkHeroShape = rememberArtworkHeroShape()
-    val artworkThumbnailShape = rememberArtworkThumbnailShape()
 
     // Anchored (not raw-accumulator) drag so the screen visually tracks the finger the whole way
     // down instead of staying put until a fixed threshold, then teleporting away. Library defaults
@@ -421,7 +420,7 @@ private fun NowPlayingContent(
                 modifier = Modifier
                     .size(56.dp)
                     .pressScale(prevInteraction),
-                shape = artworkThumbnailShape,
+                shape = SquircleShape,
                 interactionSource = prevInteraction,
             ) {
                 Icon(
@@ -451,7 +450,7 @@ private fun NowPlayingContent(
                 modifier = Modifier
                     .size(56.dp)
                     .pressScale(nextInteraction),
-                shape = artworkThumbnailShape,
+                shape = SquircleShape,
                 interactionSource = nextInteraction,
             ) {
                 Icon(

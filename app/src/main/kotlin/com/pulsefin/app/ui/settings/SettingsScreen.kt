@@ -29,6 +29,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -109,6 +110,9 @@ fun SettingsScreen(
                     )
                 }
                 item {
+                    var cornerSliderValue by remember(settings.artworkCornerPercent) {
+                        mutableFloatStateOf(settings.artworkCornerPercent.toFloat())
+                    }
                     Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -120,14 +124,17 @@ fun SettingsScreen(
                                 style = MaterialTheme.typography.bodyLarge,
                             )
                             Text(
-                                text = "${settings.artworkCornerPercent}%",
+                                text = "${cornerSliderValue.roundToInt()}%",
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
                         Slider(
-                            value = settings.artworkCornerPercent.toFloat(),
-                            onValueChange = { viewModel.setArtworkCornerPercent(it.roundToInt()) },
+                            value = cornerSliderValue,
+                            onValueChange = { cornerSliderValue = it },
+                            onValueChangeFinished = {
+                                viewModel.setArtworkCornerPercent(cornerSliderValue.roundToInt())
+                            },
                             valueRange = 0f..28f,
                             steps = 27,
                         )
