@@ -1,83 +1,72 @@
 # PulseFin
 
-A native Android music client for [Jellyfin](https://jellyfin.org/) media servers, built with
-Jetpack Compose and Material 3 Expressive.
+PulseFin is a modern, native Android music client designed specifically for self-hosted [Jellyfin](https://jellyfin.org/) media servers. Built from the ground up with Jetpack Compose and Material 3 Expressive, PulseFin brings your personal music collection to life with fluid animations, adaptive colors, and an intuitive user experience.
 
 <p align="center">
-  <img src="docs/images/home.png" width="200" alt="Home screen" />
-  <img src="docs/images/now-playing.png" width="200" alt="Now Playing with per-track dynamic theming" />
-  <img src="docs/images/albums.png" width="200" alt="Albums grid" />
-  <img src="docs/images/playlists.png" width="200" alt="Playlists" />
-  <img src="docs/images/settings.png" width="200" alt="Settings screen" />
+  <img src="docs/images/home.png" width="180" alt="Home screen" />
+  <img src="docs/images/now-playing.png" width="180" alt="Now Playing screen" />
+  <img src="docs/images/albums.png" width="180" alt="Albums grid" />
+  <img src="docs/images/playlists.png" width="180" alt="Playlists" />
+  <img src="docs/images/settings.png" width="180" alt="Settings screen" />
 </p>
 
-## Design
+<p align="center">
+  <a href="https://github.com/Funnykid7/PulseFin/releases/latest"><img src="https://img.shields.io/github/v/release/Funnykid7/PulseFin?color=6366f1&label=Latest%20Release" alt="Latest Release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPL--3.0-blue.svg" alt="License: GPL-3.0"></a>
+  <a href="https://funnykid7.github.io/PulseFin/"><img src="https://img.shields.io/badge/Website-PulseFin-indigo" alt="Website"></a>
+</p>
 
-PulseFin leans into Material 3's newer "Expressive" design language rather than a stock/default
-Material look:
+---
 
-- **Expressive shapes** — Compose's `MaterialShapes` (e.g. a 9-sided cookie shape on the play
-  button) alongside custom squircle and rounded-hero shapes for artwork and cards.
-- **Per-track dynamic color** — the Now Playing screen extracts a color seed from the currently
-  playing album art (via `Palette` + Material's color-utilities) and builds a full tonal scheme
-  from it live, so the player re-themes itself to whatever's playing.
-- **Material You elsewhere** — wallpaper-based dynamic color for the rest of the app, with a
-  dark/light toggle in Settings.
-- **Shared-element transitions** — album art morphs between a list row and the full player via
-  Compose's `SharedTransitionLayout`, rather than a hard cut.
-- **Haptic feedback** on key interactions (playback controls, favoriting, drag-to-reorder).
+## Highlights
 
-## Features
+### 🎨 Material 3 Expressive Design
+- **Per-Track Dynamic Theming** — The player dynamically samples color palettes from the active album artwork, styling playback controls, gradients, and backgrounds specifically for each track.
+- **Customizable Artwork Rounding** — Fine-tune album cover corners to your visual preference, from subtle squircle rounding to full pills and circles.
+- **Seamless Motion** — Shared-element transitions glide album artwork smoothly between list views and the full-screen player.
+- **Tactile Haptics** — Subtle, satisfying vibrational feedback across playback controls, sliders, and favorites.
 
-- Browse your library: Home mix, Songs, Albums, Artists, Playlists
-- Full playback control: queue reorder, play next / add to queue, lyrics view, queue survives
-  app restarts
-- Server-backed playlists (create/rename/delete/reorder — round-trips with the Jellyfin web UI
-  and other clients, not a local-only copy)
-- Offline downloads, with a toggle to restrict them to Wi-Fi, and a Settings view of how much
-  space they're using
-- Scrobbling back to your Jellyfin server (play history / "continue listening")
-- No telemetry, crash reporting, or analytics of any kind — nothing leaves your device except
-  calls to your own Jellyfin server
+### 🎵 Your Music, Your Way
+- **Complete Library Browsing** — Quickly access your personalized **Your Mix**, full album catalog, artists, tracks, and genre collections.
+- **Server-Synced Playlists** — Create, reorder, edit, and manage playlists that stay perfectly in sync with your Jellyfin server and other clients.
+- **Queue Management** — Full drag-and-drop queue reordering, "Play Next", and instant queue persistence across app and phone restarts.
+- **Synced Lyrics** — Read along with embedded and server-provided synchronized lyrics.
+- **Instant Scrobbling** — Automatically reports playback progress back to your Jellyfin server so "Continue Listening" and play counts are always accurate.
+
+### 💾 Offline Downloads
+- Save songs and full albums directly to your device for offline playback on commutes or flights.
+- Optional Wi-Fi only download restriction to save mobile data.
+- Built-in storage manager in Settings to view and clear cached and downloaded music.
+
+### 🔒 100% Private & Self-Hosted
+- No accounts to create, no third-party tracking, and zero telemetry.
+- Direct connection between your phone and your Jellyfin instance — your data never touches any external servers.
+
+---
 
 ## Requirements
 
-- A running Jellyfin server you control (server URL + login credentials)
-- Android 12 (API 31) or newer
+- **Jellyfin Server**: Version 10.8 or newer (requires your server URL and login credentials).
+- **Android Device**: Android 12 (API 31) or newer.
 
-## Building
+---
 
-Requires JDK 21 (Android Studio's bundled JBR is the simplest source — point `JAVA_HOME` at it):
+## Installation
 
-```sh
-export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"  # macOS example
-./gradlew :app:assembleDebug
-```
+Grab the latest APK directly from the [GitHub Releases](https://github.com/Funnykid7/PulseFin/releases/latest) page or visit the [PulseFin Website](https://funnykid7.github.io/PulseFin/).
 
-Debug builds install with no further setup. For a signed release build, see
-[docs/RELEASE_SIGNING.md](docs/RELEASE_SIGNING.md); tagging a `vX.Y.Z` release also builds and
-publishes a signed APK automatically via GitHub Actions.
+---
 
-## Architecture
+## Development & Building
 
-Multi-module Gradle project:
+PulseFin is fully open-source. For instructions on prerequisites, local compilation, and release packaging, please refer to [BUILDING.md](BUILDING.md).
 
-| Module | Role |
-| --- | --- |
-| `:app` | UI (Jetpack Compose), navigation, screen-level ViewModels |
-| `:core:domain` | Repository interfaces and domain models, no Android dependency |
-| `:core:data` | Jellyfin API access ([official Kotlin SDK](https://github.com/jellyfin/jellyfin-sdk-kotlin)), Room-backed local mirror, settings/session storage |
-| `:core:playback` | Media3/ExoPlayer playback engine, download manager, queue persistence |
-| `:core:designsystem` | Theme, shapes, typography |
-| `:core:common` | Shared utilities |
-
-Dependency injection via [Koin](https://insert-koin.io/). The server is treated as the source of
-truth throughout — local Room storage is a mirror/cache, not a parallel data model.
+---
 
 ## License
 
-GPL-3.0 — see [LICENSE](LICENSE).
+PulseFin is licensed under the **GNU General Public License v3.0** (GPL-3.0). See [LICENSE](LICENSE) for details.
 
 ## Disclaimer
 
-This is an independent, unofficial client. Not affiliated with or endorsed by the Jellyfin project.
+PulseFin is an independent, community-developed client and is not officially affiliated with or endorsed by the Jellyfin project.
