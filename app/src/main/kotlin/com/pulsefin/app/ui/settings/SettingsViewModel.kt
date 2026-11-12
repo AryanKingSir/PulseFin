@@ -36,6 +36,9 @@ class SettingsViewModel(
 
     fun setHapticsEnabled(enabled: Boolean) = viewModelScope.launch { settingsStore.setHapticsEnabled(enabled) }
 
+    fun setArtworkCornerPercent(percent: Int) =
+        viewModelScope.launch { settingsStore.setArtworkCornerPercent(percent) }
+
     fun clearAllDownloads() = viewModelScope.launch { downloadRepository.clearAllDownloads() }
 
     fun downloadAllSongs() = viewModelScope.launch {

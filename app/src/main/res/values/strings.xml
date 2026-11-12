@@ -73,6 +73,7 @@
     <string name="settings_dark_theme">Dark theme</string>
     <string name="settings_dynamic_color">Dynamic color</string>
     <string name="settings_haptics">Haptic feedback</string>
+    <string name="settings_artwork_corners">Artwork corner rounding</string>
     <string name="settings_downloaded_size">Downloaded songs use %1$s</string>
     <string name="settings_download_all">Download all songs</string>
     <string name="settings_clear_downloads">Clear all downloads</string>

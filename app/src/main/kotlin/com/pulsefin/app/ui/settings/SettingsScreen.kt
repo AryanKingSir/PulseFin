@@ -20,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -28,6 +29,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -46,6 +48,7 @@ import com.pulsefin.app.R
 import com.pulsefin.app.ui.components.bouncyClickable
 import com.pulsefin.app.ui.components.pressScale
 import org.koin.androidx.compose.koinViewModel
+import kotlin.math.roundToInt
 
 private const val PULSEFIN_WEBSITE_URL = "https://funnykid7.github.io/PulseFin/"
 
@@ -105,6 +108,37 @@ fun SettingsScreen(
                         checked = settings.hapticsEnabled,
                         onCheckedChange = viewModel::setHapticsEnabled,
                     )
+                }
+                item {
+                    var cornerSliderValue by remember(settings.artworkCornerPercent) {
+                        mutableFloatStateOf(settings.artworkCornerPercent.toFloat())
+                    }
+                    Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                text = stringResource(R.string.settings_artwork_corners),
+                                style = MaterialTheme.typography.bodyLarge,
+                            )
+                            Text(
+                                text = "${cornerSliderValue.roundToInt()}%",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        Slider(
+                            value = cornerSliderValue,
+                            onValueChange = { cornerSliderValue = it },
+                            onValueChangeFinished = {
+                                viewModel.setArtworkCornerPercent(cornerSliderValue.roundToInt())
+                            },
+                            valueRange = 0f..28f,
+                            steps = 27,
+                        )
+                    }
                 }
 
                 item { SectionHeader(stringResource(R.string.section_downloads)) }

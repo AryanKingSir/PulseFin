@@ -6,13 +6,20 @@ import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.dp
 
 /** Subtle squircle for list/grid/mini-player thumbnails (percent-based, scales with size). */
-val SquircleShape: Shape = RoundedCornerShape(percent = 28)
+val SquircleShape: Shape = RoundedCornerShape(percent = 12)
 
-/** Rounded square for the Now Playing hero art. */
-val RoundedHeroShape: Shape = RoundedCornerShape(32.dp)
+/** Rounded square for the Now Playing hero art (kept for previews; prefer [artworkHeroShape]). */
+val RoundedHeroShape: Shape = RoundedCornerShape(percent = 12)
+
+/** Dynamic thumbnail shape driven by the Settings artwork-corner slider (0-28). */
+fun artworkThumbnailShape(cornerPercent: Int): Shape =
+    RoundedCornerShape(percent = cornerPercent.coerceIn(0, 28))
+
+/** Dynamic hero shape driven by the same slider so large art matches thumbnails. */
+fun artworkHeroShape(cornerPercent: Int): Shape =
+    RoundedCornerShape(percent = cornerPercent.coerceIn(0, 28))
 
 /** Bold M3 Expressive scalloped "cookie" for the play/pause button. */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)

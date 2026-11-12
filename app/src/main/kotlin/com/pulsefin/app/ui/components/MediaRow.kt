@@ -21,7 +21,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.pulsefin.core.designsystem.theme.SquircleShape
 
 /**
  * Lightweight list row (art + title/subtitle + optional trailing text) matching the Material3
@@ -38,7 +37,7 @@ fun MediaRow(
     modifier: Modifier = Modifier,
     subtitle: String? = null,
     imageSize: Dp = 56.dp,
-    imageShape: Shape = SquircleShape,
+    imageShape: Shape? = null,
     titleStyle: TextStyle = MaterialTheme.typography.titleMedium,
     titleColor: Color = MaterialTheme.colorScheme.onSurface,
     titleWeight: FontWeight? = null,
@@ -46,6 +45,7 @@ fun MediaRow(
     trailingColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
     trailing: (@Composable () -> Unit)? = null,
 ) {
+    val resolvedShape = imageShape ?: rememberArtworkThumbnailShape()
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -59,7 +59,7 @@ fun MediaRow(
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(imageSize)
-                .clip(imageShape),
+                .clip(resolvedShape),
         )
         Column(
             modifier = Modifier

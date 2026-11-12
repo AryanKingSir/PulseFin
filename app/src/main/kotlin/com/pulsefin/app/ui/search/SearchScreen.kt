@@ -46,9 +46,9 @@ import com.pulsefin.app.ui.components.MediaRow
 import com.pulsefin.app.ui.components.SongOverflowMenu
 import com.pulsefin.app.ui.components.bouncyClickable
 import com.pulsefin.app.ui.components.pressScale
+import com.pulsefin.app.ui.components.rememberArtworkThumbnailShape
 import com.pulsefin.app.ui.playlist.AddToPlaylistSheet
 import com.pulsefin.core.common.util.sizedArtUrl
-import com.pulsefin.core.designsystem.theme.SquircleShape
 import com.pulsefin.core.common.result.PulseResult
 import com.pulsefin.core.domain.model.DownloadState
 import com.pulsefin.core.domain.model.Song
@@ -442,13 +442,14 @@ private fun ResultRow(
     modifier: Modifier = Modifier,
     trailing: (@Composable () -> Unit)? = null,
 ) {
+    val artworkShape = rememberArtworkThumbnailShape()
     MediaRow(
         title = title,
         imageModel = sizedArtUrl(artworkUrl, 180),
         modifier = modifier.bouncyClickable(onClick = onClick),
         subtitle = subtitle,
         imageSize = 48.dp,
-        imageShape = if (circle) CircleShape else SquircleShape,
+        imageShape = if (circle) CircleShape else artworkShape,
         titleStyle = MaterialTheme.typography.bodyLarge,
         trailing = trailing,
     )

@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.pulsefin.app.ui.components.LocalArtworkCornerPercent
 import com.pulsefin.app.ui.components.LocalHapticsEnabled
 import com.pulsefin.app.ui.root.PulseFinRoot
 import com.pulsefin.core.data.local.SettingsStore
@@ -58,7 +59,10 @@ class MainActivity : ComponentActivity() {
                 insetsController.isAppearanceLightNavigationBars = !settings.darkTheme
             }
             PulseFinTheme(darkTheme = settings.darkTheme, dynamicColor = settings.dynamicColor) {
-                CompositionLocalProvider(LocalHapticsEnabled provides settings.hapticsEnabled) {
+                CompositionLocalProvider(
+                    LocalHapticsEnabled provides settings.hapticsEnabled,
+                    LocalArtworkCornerPercent provides settings.artworkCornerPercent,
+                ) {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background,

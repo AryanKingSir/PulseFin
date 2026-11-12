@@ -44,9 +44,9 @@ import coil.compose.AsyncImage
 import com.pulsefin.app.R
 import com.pulsefin.app.ui.components.bouncyClickable
 import com.pulsefin.app.ui.components.pressScale
+import com.pulsefin.app.ui.components.rememberArtworkThumbnailShape
 import com.pulsefin.app.ui.components.sharedArtwork
 import com.pulsefin.core.common.util.sizedArtUrl
-import com.pulsefin.core.designsystem.theme.SquircleShape
 import com.pulsefin.core.common.result.PulseResult
 import com.pulsefin.core.domain.model.Album
 import com.pulsefin.core.domain.repository.MediaRepository
@@ -90,6 +90,7 @@ fun ArtistDetailScreen(
     LaunchedEffect(artistId) { viewModel.load(artistId) }
     val state = viewModel.uiState
     val artistName = state.albums.firstOrNull()?.artistName?.ifBlank { null } ?: stringResource(R.string.artist_fallback_name)
+    val artworkShape = rememberArtworkThumbnailShape()
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -155,7 +156,7 @@ fun ArtistDetailScreen(
                                         .sharedArtwork("album-art-${album.id.value}")
                                         .fillMaxWidth()
                                         .aspectRatio(1f)
-                                        .clip(SquircleShape),
+                                        .clip(artworkShape),
                                 )
                                 Text(
                                     text = album.name,
